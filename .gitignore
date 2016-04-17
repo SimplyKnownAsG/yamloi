@@ -12,6 +12,7 @@
 *.so
 *.dylib
 *.dll
+*.pyd
 
 # Fortran module files
 *.mod
@@ -26,3 +27,23 @@
 *.exe
 *.out
 *.app
+
+# python files
+*.pyc
+
+# Directories
+bin/
+obj/
+
+# random test outputs...
+*.png
+
+# SWIG files
+*_wrap*
+yamloi.py
+
+# editor files
+*~
+.*.swp
+tags
+

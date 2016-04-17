@@ -1,0 +1,50 @@
+# build-system generated configuration file
+# feel free to update values here, it could be fun!
+# if things break, then you are doing great!
+compilers:
+  c++:
+    command: g++
+    function: c++
+    options:
+    - -c
+    - -O2
+    - -fPIC
+    - -std=c++1y
+    - -Wall
+    output_switch: -o
+    path_switch: -I
+    paths:
+    - ./src/
+    - /usr/include/python2.7
+linkers:
+  c++-lib:
+    command: g++
+    function: c++-lib
+    options:
+    - -std=c++1y
+    - -shared
+    - -O2
+    post_options:
+    - -Wl,-Bstatic
+    - -Wl,-Bdynamic
+    output_switch: -o
+    path_switch: -L
+    paths: []
+  c++-exe:
+    command: g++
+    function: c++-exe
+    options:
+    - -O2
+    post_options:
+    - -Wl,-Bstatic
+    - -Wl,-Bdynamic
+    output_switch: -o
+    path_switch: -L
+    paths: []
+builders:
+  c++-exe:
+    compiler.function: c++
+    linker.function: c++-exe
+  c++-lib:
+    compiler.function: c++
+    linker.function: c++-lib

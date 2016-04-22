@@ -19,6 +19,7 @@ yamloilib = bs.SharedLibrary('yamloi', *srcs)
 lib_builder.build(yamloilib)
 
 swigged = bs.SwigSource('yamloi.i')#, *glob.glob('./src/*.hpp'))
+swigged.find_dependencies()
 swigged.target_language = 'python'
 swigged.cpp = True
 swigged.args.append('-I./src')

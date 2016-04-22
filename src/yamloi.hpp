@@ -4,4 +4,5 @@
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
 #include "MappingNode.hpp"
+#include "Loader.hpp"
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include "Loader.hpp"
 #include "Exceptions.hpp"
 
 #include <sstream>
@@ -8,6 +9,8 @@
 
 
 namespace yamloi {
+
+    class Loader;
 
     class ScalarNode : public Node {
     private:
@@ -19,10 +22,16 @@ namespace yamloi {
 
         bool gt(const Node* node) const;
 
+        bool need_quote() const ;
+
     public:
         ScalarNode(std::string data) { this->data = data; };
+
         ScalarNode(long long data) { this->data = std::to_string(data); };
+
         ScalarNode(double data) { this->data = std::to_string(data); };
+
+        static Node *parse(Loader *loader, std::unordered_set<char>& break_chars);
 
         template <typename T> T as() {
             std::stringstream ss(this->data);

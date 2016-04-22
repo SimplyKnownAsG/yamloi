@@ -1,4 +1,4 @@
-/* This file is input to SWIG, to inform SWIG about what it will be making...
+    /* This file is input to SWIG, to inform SWIG about what it will be making...
  */
 
 %module(directors="1") yamloi
@@ -41,6 +41,7 @@
 %include "ScalarNode.hpp"
 %include "SequenceNode.hpp"
 %include "MappingNode.hpp"
+%include "Loader.hpp"
 
 
 

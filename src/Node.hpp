@@ -33,13 +33,12 @@ namespace yamloi {
         /*     return gt(node) || eq(node); */
         /* }; */
 
-    protected:
-        virtual ~Node() {};
-
     public:
         virtual const bool is_scalar() const {
             return false;
         };
+
+        virtual ~Node() {};
 
         bool used_gt = 0;
 

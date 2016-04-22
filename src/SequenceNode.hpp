@@ -9,6 +9,8 @@
 
 namespace yamloi {
 
+    class Loader;
+
     class SequenceNode : public Node {
 
     private:
@@ -39,6 +41,8 @@ namespace yamloi {
         };
 
         const std::string dump() const;
+
+        static Node *parse(Loader *loader);
 
     };
 

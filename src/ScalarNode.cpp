@@ -1,4 +1,3 @@
-
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
 #include "MappingNode.hpp"
@@ -6,9 +5,18 @@
 
 namespace yamloi {
 
+    Node *ScalarNode::parse(Loader *loader, std::unordered_set<char>& break_chars) {
+        char c;
+        while (loader->next_char(c) && !break_chars.count(c)) {
+            continue;
+        }
+        auto node = (Node *)(new ScalarNode(loader->consume()));
+        return node;
+    }
+
     template <> std::string ScalarNode::as<std::string>() {
         return this->data;
-    };
+    }
 
     bool ScalarNode::lt(const Node* node) const {
         if (!node->is_scalar()) {
@@ -35,13 +43,25 @@ namespace yamloi {
         return this->data > that->data;
     }
 
+    bool ScalarNode::need_quote() const {
+        for (char c : this->data) {
+            switch (c) {
+                case ',':
+                case '\n':
+                case '[':
+                case ']':
+                case '{':
+                case '}':
+                    return true;
+                default:
+                    continue;
+            }
+        }
+        return false;
+    }
+
     const std::string ScalarNode::dump() const {
-        bool needs_quote = this->data.find(',') != std::string::npos
-            || this->data.find('\n') != std::string::npos // assumption that , and \n are most common
-            || this->data.find('[') != std::string::npos
-            || this->data.find(']') != std::string::npos
-            || this->data.find('{') != std::string::npos
-            || this->data.find('}') != std::string::npos;
+        bool needs_quote = this->need_quote();
         /* bool has_lf = this->data.find('\n') != std::string::npos; */
         std::stringstream result;
 

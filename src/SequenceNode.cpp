@@ -1,11 +1,33 @@
-
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
 #include "MappingNode.hpp"
+#include "Loader.hpp"
 
 #include <iostream>
 
 namespace yamloi {
+
+    Node *SequenceNode::parse(Loader *loader) {
+        SequenceNode *node = NULL;
+        if (loader->length == 1 && loader->next_c == '[') {
+            std::unordered_set<char> break_chars = { ']', ',' };
+            loader->consume(true);
+            node = new SequenceNode();
+            char c;
+            while (loader->next_char(c, true) && c != ']') {
+                Node *child = loader->parse(break_chars);
+                node->add(std::shared_ptr<Node>(child));
+                if (loader->next_c == ',') {
+                    loader->next_c = -1;
+                }
+                else if (loader->next_c == ']') {
+                    loader->next_c = -1;
+                    break;
+                }
+            }
+        }
+        return (Node*)node;
+    };
 
     bool SequenceNode::lt(const Node* node) const {
         if (node->is_scalar()) {

@@ -5,12 +5,23 @@
 
 namespace yamloi {
 
+    // trim from end
+    static inline std::string rtrim(std::string &s) {
+        int ii = s.length() - 1;
+        for (; ii >= 0; ii--) {
+            if (!Loader::whitespace.count(s.at(ii))) {
+                break;
+            }
+        }
+        return s.substr(0, ii + 1);
+    }
+
     Node *ScalarNode::parse(Loader *loader, std::unordered_set<char>& break_chars) {
         char c;
         while (loader->next_char(c) && !break_chars.count(c)) {
             continue;
         }
-        auto node = (Node *)(new ScalarNode(loader->consume()));
+        auto node = (Node *)(new ScalarNode(rtrim((loader->consume()))));
         return node;
     }
 

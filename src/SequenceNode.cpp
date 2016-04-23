@@ -6,25 +6,30 @@
 #include <iostream>
 
 namespace yamloi {
+    int level = 0;
 
     Node *SequenceNode::parse(Loader *loader) {
         SequenceNode *node = NULL;
         if (loader->length == 1 && loader->next_c == '[') {
+            level += 1;
             std::unordered_set<char> break_chars = { ']', ',' };
             loader->consume(true);
             node = new SequenceNode();
             char c;
-            while (loader->next_char(c, true) && c != ']') {
-                Node *child = loader->parse(break_chars);
-                node->add(std::shared_ptr<Node>(child));
-                if (loader->next_c == ',') {
-                    loader->next_c = -1;
+            while (loader->next_c != ']') {
+                if (Node *child = loader->parse(break_chars)) {
+                    node->add(std::shared_ptr<Node>(child));
+                    if (loader->next_c == ',') {
+                        loader->consume(true);
+                    }
                 }
-                else if (loader->next_c == ']') {
-                    loader->next_c = -1;
+                else {
                     break;
                 }
             }
+            loader->consume(true);
+            loader->next_char(c, true);
+            level -= 1;
         }
         return (Node*)node;
     };

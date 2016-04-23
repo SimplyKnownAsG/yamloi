@@ -14,7 +14,7 @@ namespace yamloi {
     Node *Loader::parse(std::unordered_set<char>& break_chars) {
         char c;
         Node *node = NULL;
-        while (this->next_char(c) && !break_chars.count(c)) {
+        while (this->next_char(c, true) && !break_chars.count(c)) {
             if (Loader::whitespace.count(c)) {
                 this->next_c = -1;
                 continue;
@@ -56,6 +56,10 @@ namespace yamloi {
         if (take_next) {
             this->content << this->next_c;
             this->next_c = -1;
+            this->length = 0;
+        }
+        else {
+            this->length = 1;
         }
         std::string result = this->content.str();
         this->content.str("");

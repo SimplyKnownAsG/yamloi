@@ -20,9 +20,9 @@ namespace yamloi {
         size_t length;
         std::ostringstream content;
         static std::unordered_set<char> break_chars;
-        static std::unordered_set<char> whitespace;
 
     public:
+        static std::unordered_set<char> whitespace;
 
         Loader(std::string msg, bool string=false) {
             this->length = 0;

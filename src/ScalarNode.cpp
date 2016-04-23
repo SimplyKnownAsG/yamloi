@@ -6,7 +6,7 @@
 namespace yamloi {
 
     // trim from end
-    static inline std::string rtrim(std::string &s) {
+    static inline std::string rtrim(const std::string &s) {
         int ii = s.length() - 1;
         for (; ii >= 0; ii--) {
             if (!Loader::whitespace.count(s.at(ii))) {
@@ -21,7 +21,7 @@ namespace yamloi {
         while (loader->next_char(c) && !break_chars.count(c)) {
             continue;
         }
-        auto node = (Node *)(new ScalarNode(rtrim((loader->consume()))));
+        auto node = (Node *)new ScalarNode(rtrim(loader->consume()));
         return node;
     }
 

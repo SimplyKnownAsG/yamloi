@@ -31,7 +31,7 @@ namespace yamloi {
 
         ScalarNode(double data) { this->data = std::to_string(data); };
 
-        static Node *parse(Loader *loader, std::unordered_set<char>& break_chars);
+        static Node *parse(Loader *loader, const std::unordered_set<char>& break_chars);
 
         template <typename T> T as() {
             std::stringstream ss(this->data);

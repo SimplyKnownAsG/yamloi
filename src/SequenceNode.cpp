@@ -1,7 +1,8 @@
+#include "Characters.hpp"
+#include "Loader.hpp"
+#include "MappingNode.hpp"
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
-#include "MappingNode.hpp"
-#include "Loader.hpp"
 
 #include <iostream>
 
@@ -12,12 +13,11 @@ namespace yamloi {
         SequenceNode *node = NULL;
         if (loader->length == 1 && loader->next_c == '[') {
             level += 1;
-            std::unordered_set<char> break_chars = { ']', ',' };
             loader->consume(true);
             node = new SequenceNode();
             char c;
             while (loader->next_c != ']') {
-                if (Node *child = loader->parse(break_chars)) {
+                if (Node *child = loader->parse(Characters::sequence_flow_separation)) {
                     node->add(std::shared_ptr<Node>(child));
                     if (loader->next_c == ',') {
                         loader->consume(true);

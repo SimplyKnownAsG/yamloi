@@ -1,6 +1,7 @@
+#include "Characters.hpp"
+#include "MappingNode.hpp"
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
-#include "MappingNode.hpp"
 
 
 namespace yamloi {
@@ -9,15 +10,16 @@ namespace yamloi {
     static inline std::string rtrim(const std::string &s) {
         int ii = s.length() - 1;
         for (; ii >= 0; ii--) {
-            if (!Loader::whitespace.count(s.at(ii))) {
+            if (!Characters::whitespace.count(s.at(ii))) {
                 break;
             }
         }
         return s.substr(0, ii + 1);
     }
 
-    Node *ScalarNode::parse(Loader *loader, std::unordered_set<char>& break_chars) {
+    Node *ScalarNode::parse(Loader *loader, const std::unordered_set<char>& break_chars) {
         char c;
+        TODO("ScalarNode::parse");
         while (loader->next_char(c) && !break_chars.count(c)) {
             continue;
         }

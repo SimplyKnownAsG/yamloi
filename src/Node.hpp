@@ -54,15 +54,11 @@ namespace yamloi {
 
         bool operator<(const Node* node) const { return this->lt(node); };
 
-        /* bool operator<=(const Node* node) { return le(node); }; */
-
         bool operator==(const Node* node) const { return this->eq(node); };
 
         bool operator!=(const Node* node) const { return !this->eq(node); };
 
         bool operator>(const Node* node) const { return this->gt(node); };
-
-        /* bool operator>=(const Node* node) { return ge(node); }; */
 
     };
 

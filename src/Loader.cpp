@@ -1,21 +1,20 @@
 #include "SequenceNode.hpp"
 #include "ScalarNode.hpp"
 #include "Loader.hpp"
+#include "Characters.hpp"
 
 namespace yamloi {
 
-    std::unordered_set<char> Loader::break_chars = { };
-    std::unordered_set<char> Loader::whitespace = { ' ', '\t', '\r', '\n' };
-
     Node *Loader::load() {
-        return this->parse(Loader::break_chars);
+        return this->parse(Characters::empty);
     }
 
-    Node *Loader::parse(std::unordered_set<char>& break_chars) {
+    Node *Loader::parse(const std::unordered_set<char>& break_chars) {
         char c;
         Node *node = NULL;
+        TODO("Loader::parse");
         while (this->next_char(c, true) && !break_chars.count(c)) {
-            if (Loader::whitespace.count(c)) {
+            if (Characters::whitespace.count(c)) {
                 this->next_c = -1;
                 continue;
             }
@@ -35,7 +34,7 @@ namespace yamloi {
             this->next_c = -1;
         }
         if (skip_whitespace) {
-            while (this->stream->get(c) && Loader::whitespace.count(c)) {
+            while (this->stream->get(c) && Characters::whitespace.count(c)) {
                 continue;
             }
         }

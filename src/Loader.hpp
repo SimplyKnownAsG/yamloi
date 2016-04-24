@@ -19,10 +19,8 @@ namespace yamloi {
         char next_c;
         size_t length;
         std::ostringstream content;
-        static std::unordered_set<char> break_chars;
 
     public:
-        static std::unordered_set<char> whitespace;
 
         Loader(std::string msg, bool string=false) {
             this->length = 0;
@@ -44,7 +42,7 @@ namespace yamloi {
 
         Node *load();
 
-        Node *parse(std::unordered_set<char>& break_chars);
+        Node *parse(const std::unordered_set<char>& break_chars);
 
         bool next_char(char &c, bool skip_whitespace=false);
 

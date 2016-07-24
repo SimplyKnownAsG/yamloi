@@ -15,9 +15,7 @@
 /* Include statements for compiling SWIG source
  */
 #include "yamloi.hpp"
-
-%}
-
+%} 
 %exception {
     try {
         $action
@@ -39,6 +37,8 @@
 %shared_ptr(yamloi::MappingNode);
 %template (NodeVector) std::vector<std::shared_ptr<yamloi::Node>>;
 
+%include "Style.hpp"
+%include "Format.hpp"
 %include "Node.hpp"
 %include "ScalarNode.hpp"
 %include "SequenceNode.hpp"

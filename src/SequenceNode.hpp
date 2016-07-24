@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Node.hpp"
+#include "ScalarNode.hpp"
 
 #include <vector>
 #include <sstream>
@@ -22,6 +23,8 @@ namespace yamloi {
 
         bool gt(const Node* node) const;
 
+        void _dump(Dumper& dumper) const override;
+
     public:
         SequenceNode() = default;
 
@@ -29,6 +32,21 @@ namespace yamloi {
             for (auto node : nodes) {
                 this->nodes.push_back(node);
             }
+        };
+
+#ifdef SWIG
+        %feature("python:slot", "mp_ass_subscript", functype="objobjargproc") set;
+#endif
+        void set(int index, std::shared_ptr<Node> value);
+
+#ifdef SWIG
+        %feature("python:slot", "mp_subscript", functype="binaryfunc") get;
+#endif
+        std::shared_ptr<Node> get(int index);
+
+        template <typename T> void add(T value) {
+            auto node = std::make_shared<ScalarNode>(value);
+            this->nodes.push_back(node);
         };
 
         void add(std::shared_ptr<Node> node) {
@@ -39,11 +57,17 @@ namespace yamloi {
             return true;
         };
 
-        const std::string dump() const;
-
         static Node *parse(Loader *loader);
 
     };
+
+#ifdef SWIG
+    %template(add) SequenceNode::add<double>;
+
+    %template(add) SequenceNode::add<long long>;
+
+    %template(add) SequenceNode::add<std::string>;
+#endif
 
 }
 

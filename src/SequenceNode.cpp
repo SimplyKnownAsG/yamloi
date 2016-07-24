@@ -1,3 +1,4 @@
+#include "Dumper.hpp"
 #include "Characters.hpp"
 #include "Loader.hpp"
 #include "MappingNode.hpp"
@@ -108,18 +109,38 @@ namespace yamloi {
         return false;
     }
 
-    const std::string SequenceNode::dump() const {
-        std::stringstream ss;
-        ss << "[";
-        unsigned int count = 0;
-        for (auto node : this->nodes) {
-            ss << node->dump();
-            if (++count < this->nodes.size()) {
-                ss << ", ";
+    void SequenceNode::set(int index, std::shared_ptr<Node> value) {
+        this->nodes.at(index) = value;
+    }
+
+    std::shared_ptr<Node> SequenceNode::get(int index) {
+        return this->nodes.at(index);
+    }
+
+    void SequenceNode::_dump(Dumper &dumper) const {
+        auto format = this->get_format(dumper.format);
+        if (format->style & FlowStyle) {
+            dumper << "[";
+            unsigned int count = 0;
+            for (auto node : this->nodes) {
+                dumper << node;
+                if (++count < this->nodes.size()) {
+                    dumper << ", ";
+                }
+            }
+            dumper << "]";
+        }
+        else {
+            auto sep = dumper.get_seq_start();
+            for (auto node : this->nodes) {
+                dumper << sep << node;
+                if (node->is_scalar() || (node->get_format(dumper.format)->style & FlowStyle)) {
+                    dumper << std::endl;
+                }
+                sep = dumper.get_seq_separator();
             }
         }
-        ss << "]";
-        return ss.str();
-    };
+    }
+
 }
 

@@ -18,6 +18,8 @@ namespace yamloi {
         bool eq(const Node* node) const;
 
         bool gt(const Node* node) const;
+
+        void _dump(Dumper& dumper) const override;
  
     public:
         MappingNode() = default;
@@ -37,8 +39,6 @@ namespace yamloi {
         %feature("python:slot", "mp_subscript", functype="binaryfunc") get;
 #endif
         std::shared_ptr<Node> get(std::shared_ptr<Node> key);
-
-        const std::string dump() const;
     };
 
 }

@@ -1,3 +1,4 @@
+#include "Dumper.hpp"
 #include "Characters.hpp"
 #include "MappingNode.hpp"
 #include "ScalarNode.hpp"
@@ -73,10 +74,9 @@ namespace yamloi {
         return false;
     }
 
-    const std::string ScalarNode::dump() const {
+    void ScalarNode::_dump(Dumper& dumper) const {
         bool needs_quote = this->need_quote();
         /* bool has_lf = this->data.find('\n') != std::string::npos; */
-        std::stringstream result;
 
         char quote = 0;
         if (needs_quote) {
@@ -91,29 +91,28 @@ namespace yamloi {
             }
         }
         if (quote != 0) {
-            result << quote;
+            dumper << quote;
         }
         for (auto c : this->data) {
             switch (c) {
                 case '\n':
-                    result << "\\n";
+                    dumper << "\\n";
                     break;
                 case '\'':
                 case '"':
                     if (c == quote) {
-                        result << '\\';
+                        dumper << '\\';
                     }
-                    result << c;
+                    dumper << c;
                     break;
                 default:
-                    result << c;
+                    dumper << c;
                     break;
             }
         }
         if (quote) {
-            result << quote;
+            dumper << quote;
         }
-        return result.str();
     };
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Format.hpp"
+
 #include <string>
 
 #include <memory>
@@ -14,8 +16,12 @@
 
 namespace yamloi {
 
+    class Dumper;
+
     class Node {
     private:
+
+        friend class Dumper;
 
         virtual bool lt(const Node* node) const = 0;
 
@@ -23,46 +29,37 @@ namespace yamloi {
 
         virtual bool gt(const Node* node) const = 0;
 
-        /* virtual bool le(const Node* node) const { */
-        /*     return lt(node) || eq(node); */
-        /* }; */
-
-        /* virtual bool ge(const Node* node) const { */
-        /*     return gt(node) || eq(node); */
-        /* }; */
+        virtual void _dump(Dumper &dumper) const = 0;
 
     public:
-
-        virtual const bool is_scalar() const {
-            return false;
-        };
+        Format *format = 0;
 
         virtual ~Node() {};
 
-        bool used_gt = 0;
+        virtual const bool is_scalar() const;
 
-        virtual const bool is_sequence() const {
-            return false;
-        };
+        virtual const bool is_sequence() const;
 
-        virtual const bool is_mapping() const {
-            return false;
-        };
+        virtual const bool is_mapping() const;
 
-        virtual const std::string dump() const = 0;
+        const std::string dump(Format format) const;
 
-        bool operator<(const Node* node) const { return this->lt(node); };
+        const std::string dump() const;
 
-        bool operator==(const Node* node) const { return this->eq(node); };
+        bool operator<(const Node* node) const;
 
-        bool operator!=(const Node* node) const { return !this->eq(node); };
+        bool operator==(const Node* node) const;
 
-        bool operator>(const Node* node) const { return this->gt(node); };
+        bool operator!=(const Node* node) const;
+
+        bool operator>(const Node* node) const;
+
+        const Format *get_format(const Format& dumper_format) const;
 
     };
 
-
 }
+
 
 namespace std {
     template<> struct less<shared_ptr<yamloi::Node>> {

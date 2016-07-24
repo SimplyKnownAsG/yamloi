@@ -46,4 +46,5 @@ yamloi.py
 *~
 .*.swp
 tags
+.vimrc
 

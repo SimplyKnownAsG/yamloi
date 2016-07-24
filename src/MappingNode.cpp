@@ -1,4 +1,5 @@
 
+#include "Dumper.hpp"
 #include "ScalarNode.hpp"
 #include "SequenceNode.hpp"
 #include "MappingNode.hpp"
@@ -58,20 +59,18 @@ namespace yamloi {
         return result->first;
     }
 
-    const std::string MappingNode::dump() const {
-        std::stringstream ss;
-        ss << "{";
+    void MappingNode::_dump(Dumper &dumper) const {
+        dumper << "{";
         unsigned int count = 0;
         for (auto key_val : this->nodes) {
-            ss << key_val.first->dump();
-            ss << ": ";
-            ss << key_val.second->dump();
+            dumper << key_val.first->dump();
+            dumper << ": ";
+            dumper << key_val.second->dump();
             if (++count < this->nodes.size()) {
-                ss << ", ";
+                dumper << ", ";
             }
         }
-        ss << "}";
-        return ss.str();
+        dumper << "}";
     };
 
 }

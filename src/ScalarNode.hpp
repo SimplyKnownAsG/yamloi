@@ -22,6 +22,8 @@ namespace yamloi {
 
         bool gt(const Node* node) const;
 
+        void _dump(Dumper& dumper) const override;
+
         bool need_quote() const ;
 
     public:
@@ -48,9 +50,6 @@ namespace yamloi {
         bool const is_scalar() const {
             return true;
         };
-
-        const std::string dump() const;
-
 
 #ifdef SWIG
 

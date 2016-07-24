@@ -3,7 +3,6 @@ import random
 import string
 import timeit
 import unittest
-from matplotlib import pyplot
 import numpy
 
 import yamloi
@@ -34,4 +33,11 @@ class LoaderTests(unittest.TestCase):
         node = parser.load()
         self.assertTrue(node.is_sequence())
         self.assertEqual('[[hello, hola], [world, mundo]]', node.dump())
+
+    @unittest.skip('block mode not supported!')
+    def test_block_sequence(self):
+        parser = yamloi.Loader('- one\n- 2\n- three.3', True)
+        node = parser.load()
+        self.assertTrue(node.is_sequence())
+        self.assertEqual('[one, 2, three.3]', node.dump())
 

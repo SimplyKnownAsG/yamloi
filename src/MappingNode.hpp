@@ -28,6 +28,16 @@ namespace yamloi {
 
         void add(std::shared_ptr<Node> key, std::shared_ptr<Node> value);
 
+#ifdef SWIG
+        %feature("python:slot", "mp_ass_subscript", functype="objobjargproc") set;
+#endif
+        void set(std::shared_ptr<Node> key, std::shared_ptr<Node> value);
+
+#ifdef SWIG
+        %feature("python:slot", "mp_subscript", functype="binaryfunc") get;
+#endif
+        std::shared_ptr<Node> get(std::shared_ptr<Node> key);
+
         const std::string dump() const;
     };
 

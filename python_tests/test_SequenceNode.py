@@ -25,6 +25,10 @@ class SequenceNodeTests(unittest.TestCase):
             node.add(seq_node)
 
         self.assertEqual('[[-1 -1, -1 0, -1 1], [0 -1, 0 0, 0 1], [1 -1, 1 0, 1 1]]', node.dump())
+        self.assertEqual('[[-1 -1, -1 0, -1 1], [0 -1, 0 0, 0 1], [1 -1, 1 0, 1 1]]',
+                node.dump(yamloi.FlowStyle))
+        self.assertEqual('[[-1 -1, -1 0, -1 1], [0 -1, 0 0, 0 1], [1 -1, 1 0, 1 1]]',
+                node.dump(yamloi.BlockStyle))
 
     def test_item_with_comma(self):
         node = yamloi.SequenceNode()

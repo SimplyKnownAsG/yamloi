@@ -16,8 +16,6 @@ namespace yamloi {
 
     class Node {
     private:
-        friend struct std::less<std::shared_ptr<Node>>;
-        friend struct std::greater<std::shared_ptr<Node>>;
 
         virtual bool lt(const Node* node) const = 0;
 
@@ -34,6 +32,7 @@ namespace yamloi {
         /* }; */
 
     public:
+
         virtual const bool is_scalar() const {
             return false;
         };
@@ -68,13 +67,25 @@ namespace yamloi {
 namespace std {
     template<> struct less<shared_ptr<yamloi::Node>> {
         bool operator()(const shared_ptr<yamloi::Node>& left, const shared_ptr<yamloi::Node>& right) const {
-            return left->lt(right.get());
+            return (*left.get()) < right.get();
         };
     };
 
     template<> struct greater<shared_ptr<yamloi::Node>> {
         bool operator()(const shared_ptr<yamloi::Node>& left, const shared_ptr<yamloi::Node>& right) const {
-            return left->gt(right.get());
+            return (*left.get()) > right.get();
+        };
+    };
+
+    template<> struct equal_to<shared_ptr<yamloi::Node>> {
+        bool operator()(const shared_ptr<yamloi::Node>& left, const shared_ptr<yamloi::Node>& right) const {
+            return (*left.get()) == right.get();
+        };
+    };
+
+    template<> struct not_equal_to<shared_ptr<yamloi::Node>> {
+        bool operator()(const shared_ptr<yamloi::Node>& left, const shared_ptr<yamloi::Node>& right) const {
+            return (*left.get()) != right.get();
         };
     };
 }

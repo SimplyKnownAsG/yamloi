@@ -1,3 +1,4 @@
+#pragma once
 
 #include <string>
 #include <exception>
@@ -23,6 +24,14 @@ namespace yamloi {
 
     public:
         TypeError(const std::string &msg) : Exception(msg) {
+        };
+
+    };
+
+    class KeyError : public Exception {
+
+    public:
+        KeyError(const std::string &msg) : Exception(msg) {
         };
 
     };

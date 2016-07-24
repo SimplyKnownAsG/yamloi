@@ -7,10 +7,9 @@ import sys
 import unittest
 
 import bs
-from bs import builders
 
-lib_builder = builders.get_builder('c++-lib')
-exe_builder = builders.get_builder('c++-exe')
+lib_builder = bs.get_builder('c++-lib')
+exe_builder = bs.get_builder('c++-exe')
 
 srcs = [src for src in glob.glob('./src/*.cpp') if 'main' not in src]
 

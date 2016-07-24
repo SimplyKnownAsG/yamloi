@@ -23,8 +23,7 @@ namespace yamloi {
         bool gt(const Node* node) const;
 
     public:
-        SequenceNode() {
-        };
+        SequenceNode() = default;
 
         SequenceNode(std::vector<std::shared_ptr<Node>> nodes) {
             for (auto node : nodes) {

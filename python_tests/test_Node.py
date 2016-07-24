@@ -85,7 +85,7 @@ def pow10ceil(x):
     return 10**(math.ceil(math.log(x,10)) + 0.5)
 
 
-class NodeCompoarisonPerformanceTests(unittest.TestCase):
+class NodeComparisonPerformanceTests(unittest.TestCase):
 
     count = 100
 
@@ -221,6 +221,70 @@ class NodeCompoarisonPerformanceTests(unittest.TestCase):
 
             t_slow = timeit.Timer(lambda: base_seq > slow_seq)
             t_fast = timeit.Timer(lambda: base_seq > fast_seq)
+            self.execute_timers(max(1, 10**x - 1), t_slow, t_fast)
+        self.assert_performance()
+
+    def _build_maps(self, x):
+        base_str, slow_str, fast_str = random_strings(20)
+        base_map = yamloi.MappingNode()
+        slow_map = yamloi.MappingNode()
+        fast_map = yamloi.MappingNode()
+
+        # prevent making a ton of actual objects... I think
+        base_node = yamloi.ScalarNode(base_str)
+        slow_node = yamloi.ScalarNode(slow_str)
+        fast_node = yamloi.ScalarNode(fast_str)
+
+        # build up mapuences            
+        base_map.add(base_node)
+        fast_map.add(fast_node)
+        for n in xrange(max(1, 10**x - 1)):
+            base_map.add(base_node, base_node)
+            fast_map.add(base_node, base_node)
+            slow_map.add(base_node, base_node)
+        slow_map.add(slow_node)
+
+        return base_map, slow_map, fast_map
+
+    @unittest.skip('tbd')
+    def test_lt_performance_map(self):
+        for x in range(4):
+            base_map, slow_map, fast_map = self._build_maps(x)
+            
+            self.assertTrue(base_map < slow_map)
+            self.assertTrue(base_map < fast_map)
+            self.assertFalse(base_map < base_map)
+
+            t_slow = timeit.Timer(lambda: base_map < slow_map)
+            t_fast = timeit.Timer(lambda: base_map < fast_map)
+            self.execute_timers(max(1, 10**x - 1), t_slow, t_fast)
+        self.assert_performance()
+
+    @unittest.skip('tbd')
+    def test_eq_performance_map(self):
+        for x in range(4):
+            base_map, slow_map, fast_map = self._build_maps(x)
+            
+            self.assertFalse(base_map == slow_map)
+            self.assertFalse(base_map == fast_map)
+            self.assertTrue(base_map == base_map)
+
+            t_slow = timeit.Timer(lambda: base_map == slow_map)
+            t_fast = timeit.Timer(lambda: base_map == fast_map)
+            self.execute_timers(max(1, 10**x - 1), t_slow, t_fast)
+        self.assert_performance()
+
+    @unittest.skip('tbd')
+    def test_gt_performance_map(self):
+        for x in range(4):
+            base_map, slow_map, fast_map = self._build_maps(x)
+            
+            self.assertFalse(base_map > slow_map)
+            self.assertFalse(base_map > fast_map)
+            self.assertFalse(base_map > base_map)
+
+            t_slow = timeit.Timer(lambda: base_map > slow_map)
+            t_fast = timeit.Timer(lambda: base_map > fast_map)
             self.execute_timers(max(1, 10**x - 1), t_slow, t_fast)
         self.assert_performance()
 

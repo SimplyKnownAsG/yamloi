@@ -23,6 +23,8 @@
         $action
     } catch(yamloi::TypeError &ex) {
         SWIG_exception(SWIG_TypeError, ex.what().c_str());
+    } catch(yamloi::KeyError &ex) {
+        SWIG_exception(SWIG_IndexError, ex.what().c_str());
     } catch(yamloi::Exception &ex) {
         SWIG_exception(SWIG_UnknownError, ex.what().c_str());
     }
@@ -42,6 +44,4 @@
 %include "SequenceNode.hpp"
 %include "MappingNode.hpp"
 %include "Loader.hpp"
-
-
 

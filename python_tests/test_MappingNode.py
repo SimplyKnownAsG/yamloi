@@ -38,6 +38,36 @@ class MappingNodeTests(unittest.TestCase):
             node.add(n1[0], n1[1])
         node.add(n2[0], n2[1])
         self.assertEqual('{1: one, 2: two, one: 1, two: 2}', node.dump())
+        self.assertEqual('1: one\n2: two\none: 1\ntwo: 2\n',
+                node.dump(yamloi.Format(yamloi.BlockStyle)))
+
+    def test_nested(self):
+        node = yamloi.MappingNode()
+
+        ones = yamloi.MappingNode()
+        ones[1] = 'one'
+        ones[1.0] = 'one point zero'
+        node['ones'] = ones
+
+        twos = yamloi.MappingNode()
+        twos[2] = 'two'
+        twos[2.0] = 'two point zero'
+        node['twos'] = twos
+
+        self.assertEqual(
+                '{ones: {1: one, 1.000000: one point zero},'
+                ' twos: {2: two, 2.000000: two point zero}}',
+                node.dump())
+        print node.dump(yamloi.Format(yamloi.BlockStyle))
+        self.assertEqual('\n'.join((
+            'ones:',
+            '  1: one',
+            '  1.000000: one point zero',
+            'twos:',
+            '  2: two',
+            '  2.000000: two point zero',
+            ''
+            )), node.dump(yamloi.Format(yamloi.BlockStyle)))
 
     @unittest.skip('yamloi.nodalize not implemented')
     def test_create_MappingNode(self):

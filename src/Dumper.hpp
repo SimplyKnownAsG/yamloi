@@ -43,6 +43,8 @@ namespace yamloi {
 
         Dumper& operator<<(std::shared_ptr<Node>& node) ;
 
+        Dumper& operator<<(const std::shared_ptr<Node>& node) ;
+
         std::string get_indent() ;
 
         std::string get_seq_start() ;

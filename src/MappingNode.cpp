@@ -60,17 +60,42 @@ namespace yamloi {
     }
 
     void MappingNode::_dump(Dumper &dumper) const {
-        dumper << "{";
-        unsigned int count = 0;
-        for (auto key_val : this->nodes) {
-            dumper << key_val.first->dump();
-            dumper << ": ";
-            dumper << key_val.second->dump();
-            if (++count < this->nodes.size()) {
-                dumper << ", ";
+        auto format = this->get_format(dumper.format);
+        if (format->style & FlowStyle) {
+            dumper << "{";
+            unsigned int count = 0;
+            for (auto key_val : this->nodes) {
+                dumper
+                    << key_val.first
+                    << ": "
+                    << key_val.second;
+                if (++count < this->nodes.size()) {
+                    dumper << ", ";
+                }
+            }
+            dumper << "}";
+        }
+        else {
+            std::string indent = dumper.get_indent();
+            for (auto key_val : this->nodes) {
+                dumper
+                    << indent
+                    << key_val.first;
+                if (key_val.second->is_scalar() ||
+                        (key_val.second->get_format(dumper.format)->style & FlowStyle)) {
+                    dumper << ": ";
+                }
+                else {
+                    dumper << ":" << std::endl;
+                }
+
+                dumper << key_val.second;
+                if (key_val.second->is_scalar()
+                        || (key_val.second->get_format(dumper.format)->style & FlowStyle)) {
+                    dumper << std::endl;
+                }
             }
         }
-        dumper << "}";
     };
 
 }

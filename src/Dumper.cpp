@@ -26,9 +26,12 @@ namespace yamloi {
     }
 
     Dumper& Dumper::operator<<(std::shared_ptr<Node>& node) {
-        this->indent_level += 1;
-        node->_dump(*this);
-        this->indent_level -= 1;
+        (*this) << node.get();
+        return *this;
+    }
+
+    Dumper& Dumper::operator<<(const std::shared_ptr<Node>& node) {
+        (*this) << node.get();
         return *this;
     }
 

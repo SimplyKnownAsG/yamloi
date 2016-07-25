@@ -60,7 +60,7 @@ namespace yamloi {
 
 }
 
-
+#ifndef SWIG
 namespace std {
     template<> struct less<shared_ptr<yamloi::Node>> {
         bool operator()(const shared_ptr<yamloi::Node>& left, const shared_ptr<yamloi::Node>& right) const {
@@ -86,4 +86,4 @@ namespace std {
         };
     };
 }
-
+#endif

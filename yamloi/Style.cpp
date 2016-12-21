@@ -1,4 +1,4 @@
-#include "Style.hpp"
+#include "yamloi/Style.hpp"
 
 namespace yamloi {
 

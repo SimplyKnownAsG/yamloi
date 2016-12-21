@@ -1,9 +1,9 @@
 
-#include "Dumper.hpp"
-#include "ScalarNode.hpp"
-#include "SequenceNode.hpp"
-#include "MappingNode.hpp"
-#include "Exceptions.hpp"
+#include "yamloi/Dumper.hpp"
+#include "yamloi/ScalarNode.hpp"
+#include "yamloi/SequenceNode.hpp"
+#include "yamloi/MappingNode.hpp"
+#include "yamloi/Exceptions.hpp"
 
 #include <algorithm>
 #include <sstream>

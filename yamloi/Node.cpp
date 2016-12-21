@@ -1,5 +1,5 @@
-#include "Node.hpp"
-#include "Dumper.hpp"
+#include "yamloi/Node.hpp"
+#include "yamloi/Dumper.hpp"
 
 #include <string>
 

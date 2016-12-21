@@ -1,8 +1,8 @@
-#include "Dumper.hpp"
-#include "Characters.hpp"
-#include "MappingNode.hpp"
-#include "ScalarNode.hpp"
-#include "SequenceNode.hpp"
+#include "yamloi/Dumper.hpp"
+#include "yamloi/Characters.hpp"
+#include "yamloi/MappingNode.hpp"
+#include "yamloi/ScalarNode.hpp"
+#include "yamloi/SequenceNode.hpp"
 
 
 namespace yamloi {

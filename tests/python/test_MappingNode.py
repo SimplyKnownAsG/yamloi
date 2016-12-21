@@ -74,3 +74,6 @@ class MappingNodeTests(unittest.TestCase):
         expected = {'one': 2, 'three': {4: 'five'}, 6: '7'}
         output = yamloi.nodalize(expected)
 
+
+if __name__ == '__main__':
+    unittest.main()

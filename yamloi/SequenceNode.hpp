@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Node.hpp"
-#include "ScalarNode.hpp"
+#include "yamloi/Node.hpp"
+#include "yamloi/ScalarNode.hpp"
 
 #include <vector>
 #include <sstream>

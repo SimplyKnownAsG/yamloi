@@ -1,7 +1,7 @@
-#include "SequenceNode.hpp"
-#include "ScalarNode.hpp"
-#include "Loader.hpp"
-#include "Characters.hpp"
+#include "yamloi/SequenceNode.hpp"
+#include "yamloi/ScalarNode.hpp"
+#include "yamloi/Loader.hpp"
+#include "yamloi/Characters.hpp"
 
 namespace yamloi {
 

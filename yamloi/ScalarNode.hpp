@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Node.hpp"
-#include "Loader.hpp"
-#include "Exceptions.hpp"
+#include "yamloi/Node.hpp"
+#include "yamloi/Loader.hpp"
+#include "yamloi/Exceptions.hpp"
 
 #include <sstream>
 #include <typeinfo>
@@ -47,23 +47,23 @@ namespace yamloi {
             return result;
         };
 
+        template <typename T> T to() {
+            return this->as<T>();
+        };
+
         bool const is_scalar() const {
             return true;
         };
 
+    };
+
 #ifdef SWIG
 
-    %extend {
-        %template(as_string) as<std::string>;
-        %template(as_int) as<int>;
-        %template(as_long) as<long long>;
-        %template(as_float) as<float>;
-        %template(as_double) as<double>;
-    }
+    %template(as_string) ScalarNode::to<std::string>;
+    %template(as_long) ScalarNode::to<long long>;
+    %template(as_double) ScalarNode::to<double>;
 
 #endif
-
-    };
 
     template <> std::string ScalarNode::as<std::string>();
 

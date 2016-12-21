@@ -30,7 +30,8 @@
 
 %nodefaultctor;
 
-%include "yamloi.hpp"
+%include "yamloi/yamloi.hpp"
+
 %shared_ptr(yamloi::Node);
 %shared_ptr(yamloi::ScalarNode);
 %shared_ptr(yamloi::SequenceNode);
@@ -44,4 +45,3 @@
 %include "SequenceNode.hpp"
 %include "MappingNode.hpp"
 %include "Loader.hpp"
-

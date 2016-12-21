@@ -94,3 +94,6 @@ class SequenceNodeTests(unittest.TestCase):
         node.add(yamloi.ScalarNode('abc'))
         self.assertEqual('[1"2, abc]', node.dump())
 
+
+if __name__ == '__main__':
+    unittest.main()

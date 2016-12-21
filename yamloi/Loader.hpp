@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Node.hpp"
+#include "yamloi/Node.hpp"
 
 #include <istream>
 #include <fstream>

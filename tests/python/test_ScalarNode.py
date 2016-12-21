@@ -16,7 +16,7 @@ class ScalarNodeTests(unittest.TestCase):
         node = yamloi.ScalarNode('thirty three')
         self.assertEqual('thirty three', node.as_string())
         
-        for func_name in ['as_int', 'as_long', 'as_float', 'as_double']:
+        for func_name in ['as_long', 'as_double']:
             with self.assertRaises(TypeError):
                 getattr(node, func_name)()
 
@@ -24,17 +24,13 @@ class ScalarNodeTests(unittest.TestCase):
 
     def test_string(self):
         node = yamloi.ScalarNode('37')
-        self.assertEqual(37, node.as_int())
         self.assertEqual(37, node.as_long())
-        self.assertEqual(37.0, node.as_float())
         self.assertEqual(37.0, node.as_double())
         self.assertEqual('37', node.dump())
 
     def test_int(self):
         node = yamloi.ScalarNode(14)
-        self.assertEqual(14, node.as_int())
         self.assertEqual(14, node.as_long())
-        self.assertEqual(14.0, node.as_float())
         self.assertEqual(14.0, node.as_double())
 
         self.assertEqual('14', node.dump())
@@ -43,10 +39,7 @@ class ScalarNodeTests(unittest.TestCase):
         for maxmin64 in [2 ** 63 - 1, -2**63]:
             node = yamloi.ScalarNode(maxmin64)
             self.assertEqual(maxmin64, node.as_long())
-            self.assertEqual(float(maxmin64), node.as_double())
-            with self.assertRaises(TypeError):
-                self.assertEqual(float(maxmin64), node.as_int())
-
+            self.assertEqual(float(maxmin64), node.as_double())     
             self.assertEqual(str(maxmin64), node.dump())
 
     def test_int64_range(self):
@@ -54,7 +47,7 @@ class ScalarNodeTests(unittest.TestCase):
             node = yamloi.ScalarNode(maxmin64)
             # assert NOT equal ... SWIG/c++ converts to a float
             self.assertNotEqual(str(maxmin64), node.dump())
-            
+
             float_val = float(maxmin64)
             node = yamloi.ScalarNode(float_val)
             self.assertEqual(float_val, node.as_double())
@@ -74,8 +67,8 @@ class SpecialCharacterScalarNodeTests(unittest.TestCase):
     def test_multiline_string(self):
         node = yamloi.ScalarNode('thirty\nthree\n plus 13')
         self.assertEqual('thirty\nthree\n plus 13', node.as_string())
-        
-        for func_name in ['as_int', 'as_long', 'as_float', 'as_double']:
+
+        for func_name in ['as_long', 'as_double']:
             with self.assertRaises(TypeError):
                 getattr(node, func_name)()
 
@@ -124,4 +117,3 @@ class SpecialCharacterScalarNodeTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

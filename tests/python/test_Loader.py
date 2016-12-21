@@ -41,3 +41,6 @@ class LoaderTests(unittest.TestCase):
         self.assertTrue(node.is_sequence())
         self.assertEqual('[one, 2, three.3]', node.dump())
 
+
+if __name__ == '__main__':
+    unittest.main()

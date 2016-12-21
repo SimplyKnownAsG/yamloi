@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Style.hpp"
+#include "yamloi/Style.hpp"
 
 #include <string>
 #include <algorithm>

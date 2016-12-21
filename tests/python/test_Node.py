@@ -288,3 +288,6 @@ class NodeComparisonPerformanceTests(unittest.TestCase):
             self.execute_timers(max(1, 10**x - 1), t_slow, t_fast)
         self.assert_performance()
 
+
+if __name__ == '__main__':
+    unittest.main()
